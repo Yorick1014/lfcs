@@ -26,6 +26,8 @@
 
   * Netplan configuration files are stored in `/etc/netplan/*.yaml`.
 
+  * Look for Netplan configuration templates in `/etc/shared/doc`.
+
   * DHCP example (`enp0s3`):
 
   ```yaml
@@ -55,7 +57,7 @@
             - 8.8.8.8
   ```
 
-  * Apply changes with `sudo netplan try`, `sudo netplan apply`, and optionally `sudo netplan generate`. `netplan try` is safer for remote systems because it temporarily applies changes and automatically rolls back if they are not confirmed.
+  * Apply changes with `sudo netplan try`, `sudo netplan apply`, and optionally `sudo netplan generate`. `netplan try` is safer for remote systems because it temporarily applies changes and automatica[...]
 
   * YAML is indentation-sensitive (spaces, not tabs). If configuration files include sensitive information, restrict permissions (for example with `sudo chmod 600 /etc/netplan/*.yaml`).
 
@@ -89,7 +91,7 @@
 
 Network Manager
 
-* Its purpose is to automatically detect, configure, and connect to a network whether wired or wireless such as VPN, DNS, static routes, addresses, etc which is why you'll see #Configured by NetworkManager in /etc/resolv.conf, for example. Although it will prefer wired connections, it will pick the best known wireless connection and whichever it deems to be the most reliable. It will also switch over to wired automatically if it's there.
+* Its purpose is to automatically detect, configure, and connect to a network whether wired or wireless such as VPN, DNS, static routes, addresses, etc which is why you'll see #Configured by NetworkMa[...]
   It's not necessary and many (including me) disable it as most would rather manage their own network settings and don't need it done for them.
 * `systemctl stop NetworkManager.service`
 * `systemctl disable NetworkManager.service`
@@ -105,7 +107,7 @@ Network
 
 References:
 
-* [https://unix.stackexchange.com/questions/449186/what-is-the-usage-of-networkmanager-in-centos-rhel7](https://unix.stackexchange.com/questions/449186/what-is-the-usage-of-networkmanager-in-centos-rhel7)
+* [https://unix.stackexchange.com/questions/449186/what-is-the-usage-of-networkmanager-in-centos-rhel7](https://unix.stackexchange.com/questions/449186/what-is-the-usage-of-networkmanager-in-centos-rh[...]
 
 ## Implement packet filtering
 
@@ -215,7 +217,7 @@ iptables
 * `iptables -A INPUT -p tcp --dport 22 -j ACCEPT`
   * Accept all inbound traffic for tcp port 22
 * `iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT`
-  * This is a rule that is used to ACCEPT all traffic generated as a response of an inbound connection that was accepted. E.g. if incoming traffic for web server on port 80 was accepted, this rule permits to response traffic to exit from system without inserting specific rules in OUTPUT chain
+  * This is a rule that is used to ACCEPT all traffic generated as a response of an inbound connection that was accepted. E.g. if incoming traffic for web server on port 80 was accepted, this rule per[...]
 
 
 
@@ -242,9 +244,6 @@ References:
     * `-n` show numerical addresses and port numbers
     * `-l` listening sockets
     * `-p` show process information; may require `sudo`
-    * `0.0.0.0:<port>` means the service is listening on that port on all local IPv4 interfaces and can accept incoming IPv4 connections to any interface, subject to firewall rules and other access controls.
-    * `[::]:<port>` means the service is listening on that port on all local IPv6 interfaces and can accept incoming IPv6 connections to any interface, subject to firewall rules and other access controls.
-    * `127.0.0.1:<port>` and `[::1]:<port>` mean the service is bound only to loopback and is not directly reachable from the network.
   * `ss -tan`
     * Show all TCP connections, including established connections
   * `ss -s`
@@ -319,3 +318,4 @@ NTP
 * Configuration file `/etc/ntp.conf`
 * `server` parameters are servers that are used as source of synchronization
 * `ntpq -p` check current status of synchronization
+
