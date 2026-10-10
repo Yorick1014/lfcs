@@ -18,44 +18,42 @@
   * Automatic means that will be used DHCP protocol
   * **NOTE**: IP must be inserted with syntax IP/NETMASK (e.t. 192.168.0.2/24)
 
-### Netplan (Ubuntu and similar systems)
+* Netplan (Ubuntu and similar systems)
 
-Netplan is commonly used on Ubuntu and other systems using `systemd-networkd` or NetworkManager. The `nmtui` and `/etc/sysconfig/network-scripts` notes below are primarily for CentOS/RHEL-style systems.
+  * Netplan configuration files are stored in `/etc/netplan/*.yaml`.
 
-Netplan configuration files are stored in `/etc/netplan/*.yaml`.
+  * DHCP example (`enp0s3`):
 
-DHCP example (`enp0s3`):
+  ```yaml
+  network:
+    version: 2
+    ethernets:
+      enp0s3:
+        dhcp4: true
+  ```
 
-```yaml
-network:
-  version: 2
-  ethernets:
-    enp0s3:
-      dhcp4: true
-```
+  *Static IPv4 example:
 
-Static IPv4 example:
-
-```yaml
-network:
-  version: 2
-  ethernets:
-    enp0s3:
-      dhcp4: false
-      addresses:
-        - 192.168.0.10/24
-      routes:
-        - to: default
-          via: 192.168.0.1
-      nameservers:
+  ```yaml
+  network:
+    version: 2
+    ethernets:
+      enp0s3:
+        dhcp4: false
         addresses:
-          - 1.1.1.1
-          - 8.8.8.8
-```
+          - 192.168.0.10/24
+        routes:
+          - to: default
+            via: 192.168.0.1
+        nameservers:
+          addresses:
+            - 1.1.1.1
+            - 8.8.8.8
+  ```
 
-Apply changes with `sudo netplan try`, `sudo netplan apply`, and optionally `sudo netplan generate`. `netplan try` is safer for remote systems because it temporarily applies changes and automatically rolls back if they are not confirmed.
+  * Apply changes with `sudo netplan try`, `sudo netplan apply`, and optionally `sudo netplan generate`. `netplan try` is safer for remote systems because it temporarily applies changes and automatically rolls back if they are not confirmed.
 
-YAML is indentation-sensitive (spaces, not tabs). If configuration files include sensitive information, restrict permissions (for example with `sudo chmod 600 /etc/netplan/*.yaml`).
+  * YAML is indentation-sensitive (spaces, not tabs). If configuration files include sensitive information, restrict permissions (for example with `sudo chmod 600 /etc/netplan/*.yaml`).
 
 
 * All network configuration will be stored in `/etc/sysconfig/network-scripts`
