@@ -231,14 +231,12 @@ References:
   * `systemctl status servicename`
 
 * `ss` is used to inspect sockets and listening network services
-  * `ss -tuln`
-    * Show listening TCP and UDP ports without resolving service names
+  * `ss -tunlp`
+    * Show listening TCP and UDP ports, including the processes using each socket, without resolving service names
     * `-t` TCP sockets
     * `-u` UDP sockets
-    * `-l` listening sockets
     * `-n` show numerical addresses and port numbers
-  * `ss -tulnp`
-    * Also show the process using each socket
+    * `-l` listening sockets
     * `-p` show process information; may require `sudo`
   * `ss -tan`
     * Show all TCP connections, including established connections
