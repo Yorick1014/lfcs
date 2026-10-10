@@ -32,7 +32,7 @@
         dhcp4: true
   ```
 
-  *Static IPv4 example:
+  * Static IPv4 example:
 
   ```yaml
   network:
