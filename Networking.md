@@ -10,6 +10,10 @@
 
     Short syntax
 
+  * `ip -c addr show`
+
+    Show IP addresses configuration with colored output
+
 * `nmtui`
 
   *Network Manager Text User Interface* - Graphical interface to manage network connections configuration
