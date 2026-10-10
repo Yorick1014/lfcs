@@ -242,6 +242,9 @@ References:
     * `-n` show numerical addresses and port numbers
     * `-l` listening sockets
     * `-p` show process information; may require `sudo`
+    * `0.0.0.0:<port>` means the service is listening on that port on all local IPv4 interfaces and can accept incoming IPv4 connections to any interface, subject to firewall rules and other access controls.
+    * `[::]:<port>` means the service is listening on that port on all local IPv6 interfaces and can accept incoming IPv6 connections to any interface, subject to firewall rules and other access controls.
+    * `127.0.0.1:<port>` and `[::1]:<port>` mean the service is bound only to loopback and is not directly reachable from the network.
   * `ss -tan`
     * Show all TCP connections, including established connections
   * `ss -s`
