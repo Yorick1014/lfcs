@@ -139,7 +139,8 @@ sudo ufw default allow outgoing
 
 * Deny unsolicited incoming connections by default.
 * Allow outgoing connections by default.
-* Configure required allow rules before enabling UFW, especially when connected through SSH.
+* UFW is disabled by default, so you must enable it to enforce rules.
+* Because UFW denies incoming traffic by default, allow SSH first (`sudo ufw allow 22/tcp`) before enabling UFW, especially on remote systems.
 
 #### Check firewall status
 
