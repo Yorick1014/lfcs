@@ -26,7 +26,7 @@
 
   * Netplan configuration files are stored in `/etc/netplan/*.yaml`.
 
-  * Look for Netplan configuration templates in `/etc/shared/doc`.
+  * Look for Netplan configuration templates in `/user/shared/doc/netplan/examples/`.
 
   * DHCP example (`enp0s3`):
 
@@ -318,4 +318,3 @@ NTP
 * Configuration file `/etc/ntp.conf`
 * `server` parameters are servers that are used as source of synchronization
 * `ntpq -p` check current status of synchronization
-
