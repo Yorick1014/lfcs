@@ -85,6 +85,52 @@
 
   * It is possible to insert more than one *nameserver* as backup (primary and secondary)
 
+## Start, stop, and check the status of network services
+
+* Network services are controlled as other daemon with `systemctl` command
+  * `systemctl status servicename`
+
+* `ss` is used to inspect sockets and listening network services
+  * `ss -tunlp`
+    * Show listening TCP and UDP ports, including the processes using each socket, without resolving service names
+    * `-t` TCP sockets
+    * `-u` UDP sockets
+    * `-n` show numerical addresses and port numbers
+    * `-l` listening sockets
+    * `-p` show process information; may require `sudo`
+  * `ss -tan`
+    * Show all TCP connections, including established connections
+  * `ss -s`
+    * Show socket usage statistics
+
+* With `netstat` is it possible list internet port opened by a process
+  * `yum -y install net-tools`
+  * `netstat -tln`
+    * Show TCP port opened by processes
+   
+
+## Statically route IP traffic
+
+* `ip route show`
+  * Print route
+  * Alternative command `route -n`
+* `ip route add 192.0.2.1 via 10.0.0.1 [dev interface]`
+  * Add route to 192.0.2.1 through 10.0.0.1. Optionally interface can be specified
+* To make route persistent, create a *route-ifname* file for the interface through which the subnet is accessed, e.g eth0:
+  * `vi /etc/sysconfig/network-scripts/route-eth0`
+  * Add line `192.0.2.1 via 10.0.0.101 dev eth0`
+  * `service network restart` to reload file
+
+* `ip route add 192.0.2.0/24 via 10.0.0.1 [dev ifname]` 
+  * Add a route to subnet 192.0.2.0/24
+
+
+* To configure system as route forward must be enabled
+  * `echo 1 > /proc/sys/net/ipv4/ip_forward`
+  * To make configuration persistent
+    * `echo net.ipv4.ip_forward = 1 > /etc/sysctl.d/ipv4.conf`
+
+
 ## Configure network services to start automatically at boot
 
 Network Manager
@@ -102,12 +148,7 @@ Network
 * `systemctl restart network` to reload network configuration
 
 
-
-References:
-
-* [https://unix.stackexchange.com/questions/449186/what-is-the-usage-of-networkmanager-in-centos-rhel7](https://unix.stackexchange.com/questions/449186/what-is-the-usage-of-networkmanager-in-centos-rh[...]
-
-## Implement packet filtering
+## Firewall and packet filtering
 
 ### Netfilter fundamentals
 
@@ -228,59 +269,6 @@ sudo ufw allow 'Nginx Full'
 * `ufw app list` displays available profiles.
 * `ufw app info "<profile>"` displays the ports and protocols in a profile.
 * `ufw allow 'Nginx Full'` allows HTTP and HTTPS traffic for the Nginx application profile.
-
-
-## Start, stop, and check the status of network services
-
-* Network services are controlled as other daemon with `systemctl` command
-  * `systemctl status servicename`
-
-* `ss` is used to inspect sockets and listening network services
-  * `ss -tunlp`
-    * Show listening TCP and UDP ports, including the processes using each socket, without resolving service names
-    * `-t` TCP sockets
-    * `-u` UDP sockets
-    * `-n` show numerical addresses and port numbers
-    * `-l` listening sockets
-    * `-p` show process information; may require `sudo`
-  * `ss -tan`
-    * Show all TCP connections, including established connections
-  * `ss -s`
-    * Show socket usage statistics
-
-* With `netstat` is it possible list internet port opened by a process
-  * `yum -y install net-tools`
-  * `netstat -tln`
-    * Show TCP port opened by processes
-
-
-
-## Statically route IP traffic
-
-* `ip route show`
-  * Print route
-  * Alternative command `route -n`
-* `ip route add 192.0.2.1 via 10.0.0.1 [dev interface]`
-  * Add route to 192.0.2.1 through 10.0.0.1. Optionally interface can be specified
-* To make route persistent, create a *route-ifname* file for the interface through which the subnet is accessed, e.g eth0:
-  * `vi /etc/sysconfig/network-scripts/route-eth0`
-  * Add line `192.0.2.1 via 10.0.0.101 dev eth0`
-  * `service network restart` to reload file
-
-* `ip route add 192.0.2.0/24 via 10.0.0.1 [dev ifname]` 
-  * Add a route to subnet 192.0.2.0/24
-
-
-
-* To configure system as route forward must be enabled
-  * `echo 1 > /proc/sys/net/ipv4/ip_forward`
-  * To make configuration persistent
-    * `echo net.ipv4.ip_forward = 1 > /etc/sysctl.d/ipv4.conf`
-
-References:
-
-* [https://my.esecuredata.com/index.php?/knowledgebase/article/2/add-a-static-route-on-centos](https://my.esecuredata.com/index.php?/knowledgebase/article/2/add-a-static-route-on-centos)
-
 
 
 ## Synchronize time using other network peers
