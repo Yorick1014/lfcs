@@ -228,13 +228,6 @@ sudo ufw allow 'Nginx Full'
 * `ufw app info "<profile>"` displays the ports and protocols in a profile.
 * `ufw allow 'Nginx Full'` allows HTTP and HTTPS traffic for the Nginx application profile.
 
-### nftables fallback
-
-* `nft list ruleset` — display the complete active nftables ruleset.
-* `nft list tables` — list the nftables tables currently configured.
-* `nft list chain inet filter input` — display the rules in the input chain.
-* `nft flush ruleset` — remove the complete active ruleset; use with caution.
-* UFW may manage the underlying Netfilter rules, so avoid mixing manual nftables changes with UFW unless you understand the interaction.
 
 ## Start, stop, and check the status of network services
 
